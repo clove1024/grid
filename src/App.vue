@@ -24,30 +24,41 @@ export default {
     AgGridVue
   },
   setup() {
-    const columnDefs = reactive({
+    let columnDefs = reactive({
       value: [
-      { field: 'userId' },
-      { field: 'id' },
-      { field: 'title' },
-      { field: 'body' }
+      { field: 'athlete' },
+      { field: 'age' },
+      { field: 'country' },
+      { field: 'year' },
+      { field: 'date' },
+      { field: 'sport' },
+      { field: 'gold' },
+      { field: 'silver' },
+      { field: 'bronze' },
+      { field: 'total' }
       ]
     });
-    const rowData = reactive({
-      value: [
-      { userId: '', id: '', title: '', body: '' }
-    ]});
+    let rowData = reactive({
+      value: []
+    });
+    const defaultColDef = {
+      sortable: true,
+      filter: true
+    };
+
     onMounted(() => {
-      axios.get("https://jsonplaceholder.typicode.com/posts")
-        .then(response => {
-          rowData.value = response.data
-        })
+      axios.get("https://www.ag-grid.com/example-assets/olympic-winners.json")
+        // .then(response => {
+        //   rowData.value = response.data
+        // })
         .then((result) => result.json())
         .then((remoteRowData) => (rowData.value = remoteRowData));
     });
 
     return {
       columnDefs,
-      rowData
+      rowData,
+      defaultColDef
     };
   }
 }
