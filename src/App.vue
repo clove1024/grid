@@ -3,7 +3,7 @@
     <h2> The first Usuage of AXIOS </h2>
     <ag-grid-vue
       class="ag-theme-balham"
-      style="height: 500px"
+      style="width: 100%; height: 100vh"
       :columnDefs="columnDefs.value"
       :rowData="rowData.value"
     ></ag-grid-vue>
@@ -16,7 +16,7 @@ import { reactive, onMounted } from 'vue';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import axios from 'axios'
+
 
 export default {
   name: 'App',
@@ -27,8 +27,8 @@ export default {
     let columnDefs = reactive({
       value: [
       { field: 'athlete' },
-      { field: 'age' },
-      { field: 'country' },
+      { field: 'age', filter: 'agNumberColumnFilter' },
+      { field: 'country', filter: 'agTextColumnFilter'},
       { field: 'year' },
       { field: 'date' },
       { field: 'sport' },
@@ -42,12 +42,11 @@ export default {
       value: []
     });
     const defaultColDef = {
-      sortable: true,
-      filter: true
+      def: { flex: 1, minWidth: 100, sortable: true, filter: true }
     };
 
     onMounted(() => {
-      axios.get("https://www.ag-grid.com/example-assets/olympic-winners.json")
+      fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
         // .then(response => {
         //   rowData.value = response.data
         // })
